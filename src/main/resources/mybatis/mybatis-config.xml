@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<setting name="lazyLoadingEnabled" value="true"/>
+	</settings>
+	
+	<!-- EasyMyBatis-Pagination -->
+	<plugins>
+		<plugin interceptor="com.wangcw.framework.base.pagination.EasyMybatisPaginationPlugin">
+			<!-- Default dialect; Optional -->
+			<!-- Also you can set or change with 'pageBean.setDialect(PageBean.XXXX_DIALECT)' code. -->
+			<!-- Value: ORACLE, ORACLE_12C, SQLSERVER, SQLSERVER_2012, MYSQL -->
+			<!-- <property name="dialect" value="MYSQL" /> -->
+		</plugin>
+	</plugins>
+	
+</configuration>

@@ -1,0 +1,98 @@
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../config/ehcache.xsd">
+
+    <diskStore path="java.io.tmpdir"/>
+
+	<!--
+	* persistence:
+	-none：不持久化缓存的元素
+	-localTempSwap：当堆内存或者非堆内存里面的元素已经满了的时候，将其中的元素临时的存放在磁盘上，一旦重启就会消失。
+	-localRestartable：该策略只对企业版Ehcache有用。它可以在重启的时候将堆内存或者非堆内存里面的元素持久化到硬盘上，重启之后再从硬盘上恢复元素到内存中。
+	-distributed：该策略不适用于单机，是用于分布式的。
+	 -->
+
+    <defaultCache
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            maxElementsOnDisk="10000000"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </defaultCache>
+    
+       <cache
+       	    name="RoleCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            maxElementsOnDisk="10000000"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </cache>
+    
+      <cache
+       	    name="PermissionCache"
+            maxElementsInMemory="1000"
+            eternal="false"
+            timeToIdleSeconds="120"
+            timeToLiveSeconds="120"
+            maxElementsOnDisk="10000000"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+    </cache>
+    
+    
+        
+     <!--  Shiro SessionDAO Default Cache Region Name.
+	* By default, the EnterpriseCacheSessionDAO asks the CacheManager 
+	for a Cache named "shiro-activeSessionCache".  
+	* overflowToDisk="true" - this ensures that if you run out of process memory, sessions won't be lost and can serialized to disk
+    * eternal="true" - ensures that cache entries (Session instances) are never expired or expunged automatically by the cache. This is necessary because Shiro does its own validation based on a scheduled process (see "Session Validation & Scheduling" below). If we turned this off, the cache would likely evict Sessions without Shiro knowing about it, which could cause problems.
+	-->
+	 <cache name="shiro-activeSessionCache"
+       maxElementsInMemory="10000"
+       overflowToDisk="true"
+       eternal="true"
+       timeToLiveSeconds="0"
+       timeToIdleSeconds="0"
+       diskPersistent="false"
+       diskExpiryThreadIntervalSeconds="600"/>
+
+        <!-- ## EasyShiro LockLogin Configuration ## -->
+        <!-- LockLogin 管理锁定时间周期的 EHCache 缓存名称，只需调整timeToIdleSeconds -->
+        <!-- 达到登录锁定次数，登录锁定  2 小时 -->
+        <!-- LockLogin name cache management locks EHCache time period-->
+	    <!-- Simply adjust timeToIdleSeconds, the default number of times to reach the login lockout, login lockout 2 Hours-->
+        <cache
+                name="shiro-lockLoginCache"
+                maxElementsInMemory="100000"
+                eternal="false"
+                timeToIdleSeconds="0"
+                timeToLiveSeconds="7200"
+                diskExpiryThreadIntervalSeconds="600"
+                memoryStoreEvictionPolicy="LRU"
+                 overflowToDisk="true"
+                 diskPersistent="false"
+                >
+        </cache>
+       
+       <!-- EasyShiro LockLogin 统计登录错误次数时间周期的 EHCache 缓存名称，只需调整timeToIdleSeconds -->
+       <!-- 统计 10 分钟内的错误次数  -->
+       <!-- EHCache caching name Lock Login login error statistics of the number of time periods -->
+       <!-- Simply adjust timeToIdleSeconds, default statistics the number of errors in 10 minutes -->
+       <cache
+            name="shiro-lockCheckCache"
+            maxElementsInMemory="100000"
+            eternal="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="600"
+            diskExpiryThreadIntervalSeconds="600"
+            memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap"/>
+        </cache>
+
+</ehcache>

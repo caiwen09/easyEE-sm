@@ -1,0 +1,75 @@
+package com.wangcw.framework.system.criteria;
+
+
+import com.wangcw.framework.base.pagination.EasyCriteria;
+import com.wangcw.framework.base.util.StringUtils;
+
+/**
+  *@description   SysRole entity
+  *@author        王财文
+  *@version       1.0 2018-3-27
+  */
+
+
+public class SysRoleCriteria extends EasyCriteria implements java.io.Serializable {
+
+	// Fields
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/*
+ 	 * 1. 条件属性
+ 	 */
+	private String name;
+	private Integer status;
+	 /*
+ 	 * 2. 构造方法
+ 	 */
+	
+	public SysRoleCriteria(String name, Integer status) {
+		super();
+		this.name = name;
+		this.status = status;
+	}
+
+	public SysRoleCriteria() {
+		super();
+	}
+
+	/*
+ 	 * 3. 条件生成抽象方法实现
+ 	 */
+	public String getCondition() {
+		values.clear(); //清除条件数据
+		StringBuffer condition = new StringBuffer();
+		if(StringUtils.isNotNullAndEmpty(this.getName())){
+			condition.append(" and name like #{name}");
+			values.put("name", "%"+this.getName()+"%");
+		}
+		if(StringUtils.isNotNullAndEmpty(this.getStatus())){
+			condition.append(" and status=#{status}");
+			values.put("status", this.getStatus());
+		}
+		return condition.toString();
+	}
+	/*
+ 	 * 4. Setters & Getters...
+ 	 */ 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+}
