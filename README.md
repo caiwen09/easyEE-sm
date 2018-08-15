@@ -4,10 +4,10 @@
 
 #SM Framework
 Spring 4+(SpringMVC)
-MyBatis 3.4+
-Shiro 2+
+MyBatis 3.4
+Shiro 2
 EasyMyBatis-Pagination
 EasyShiro
 EasyFilter
-EasyUI 1.4+
-EasyUIEx 2.2+
+EasyUI 1.4
+EasyUIEx 2.2
